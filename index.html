@@ -2,39 +2,199 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>示例静态站点</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>智能工作台</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1>欢迎来到我的网站</h1>
-      <nav>
-        <a href="#">首页</a>
-        <a href="#">关于</a>
-        <a href="#">联系</a>
-      </nav>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-icon">工作台</div>
+          <div>
+            <h1>智能工作台</h1>
+            <p>任务、统计与快速决策一站式管理</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="icon-button" aria-label="切换主题">🌙</button>
+          <nav>
+            <button class="nav-link active" data-tab="overview">概览</button>
+            <button class="nav-link" data-tab="tasks">任务</button>
+            <button class="nav-link" data-tab="report">报表</button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="container dashboard">
+      <section class="split-panel">
+        <div class="panel panel-summary" data-tab-panel="overview">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">今天</p>
+              <h2>您的工作进度</h2>
+            </div>
+            <span id="greeting">你好，管理员</span>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <p>新任务</p>
+              <h3 id="statPending">0</h3>
+            </article>
+            <article class="stat-card">
+              <p>已完成</p>
+              <h3 id="statCompleted">0</h3>
+            </article>
+            <article class="stat-card">
+              <p>完成率</p>
+              <h3 id="statRatio">0%</h3>
+            </article>
+            <article class="stat-card">
+              <p>活跃专注度</p>
+              <h3 id="statFocus">0%</h3>
+            </article>
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-head">
+              <div>
+                <p class="eyebrow">今日摘要</p>
+                <h3>待办任务与时间安排</h3>
+              </div>
+              <button id="quickAddBtn" class="secondary">快速添加任务</button>
+            </div>
+            <div class="progress-row">
+              <span>本周完成目标</span>
+              <strong id="weekProgress">0 / 10</strong>
+            </div>
+            <div class="progress-bar">
+              <div id="weekProgressBar" class="progress-fill"></div>
+            </div>
+            <ul class="quick-summary" id="summaryList">
+              <li>保持专注 45 分钟</li>
+              <li>3 条任务需要尽快处理</li>
+              <li>团队会议在 16:00</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside class="panel panel-actions" data-tab-panel="tasks">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">任务中心</p>
+              <h2>管理所有任务</h2>
+            </div>
+            <button id="newTaskModalBtn" class="primary">新建任务</button>
+          </div>
+
+          <div class="task-controls">
+            <div class="task-filter">
+              <button class="filter-btn active" data-filter="all">全部</button>
+              <button class="filter-btn" data-filter="active">未完成</button>
+              <button class="filter-btn" data-filter="completed">已完成</button>
+            </div>
+            <div class="task-search">
+              <input id="taskSearch" type="search" placeholder="搜索任务" />
+            </div>
+          </div>
+
+          <div class="task-list" id="taskList"></div>
+        </aside>
+      </section>
+
+      <section class="grid report-grid" data-tab-panel="report">
+        <article class="panel report-card">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">生产力</p>
+              <h2>本周关键指标</h2>
+            </div>
+          </div>
+          <div class="chart-row">
+            <div>
+              <p>任务完成趋势</p>
+              <div class="bar-chart">
+                <div class="bar" style="--value:40%"><span>周一</span></div>
+                <div class="bar" style="--value:65%"><span>周二</span></div>
+                <div class="bar" style="--value:55%"><span>周三</span></div>
+                <div class="bar" style="--value:85%"><span>周四</span></div>
+                <div class="bar" style="--value:70%"><span>周五</span></div>
+              </div>
+            </div>
+            <div class="metric-cards">
+              <div class="metric-card">
+                <h3>8h</h3>
+                <p>预计工作时长</p>
+              </div>
+              <div class="metric-card">
+                <h3>24</h3>
+                <p>下周任务数</p>
+              </div>
+              <div class="metric-card">
+                <h3>4</h3>
+                <p>高优先级</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel report-card note-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">笔记</p>
+              <h2>快速会议笔记</h2>
+            </div>
+          </div>
+          <textarea id="noteInput" placeholder="记录你的重要事项..."></textarea>
+          <button id="saveNoteBtn" class="secondary">保存笔记</button>
+          <div class="note-preview" id="notePreview">暂无笔记。保持你的思路清晰。</div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>© 2026 智能工作台 • 启动你的高效协作</p>
+      </div>
+    </footer>
+  </div>
+
+  <div id="taskModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>添加新任务</h2>
+        <button id="closeModal" class="icon-button" aria-label="关闭">✕</button>
+      </div>
+      <form id="taskForm">
+        <label>
+          任务名称
+          <input id="taskTitle" type="text" placeholder="输入任务标题" required />
+        </label>
+        <label>
+          优先级
+          <select id="taskPriority">
+            <option value="低">低</option>
+            <option value="中" selected>中</option>
+            <option value="高">高</option>
+          </select>
+        </label>
+        <label>
+          分类
+          <select id="taskCategory">
+            <option value="设计">设计</option>
+            <option value="开发">开发</option>
+            <option value="测试">测试</option>
+            <option value="文档">文档</option>
+          </select>
+        </label>
+        <button type="submit" class="primary">保存任务</button>
+      </form>
     </div>
-  </header>
-  <main class="container">
-    <section class="hero">
-      <h2>一个简单的静态站点示例</h2>
-      <p>由助手生成，可直接打开或用静态服务器预览。</p>
-      <button id="cta">点我</button>
-    </section>
-    <section class="features">
-      <h3>特性</h3>
-      <ul>
-        <li>响应式布局</li>
-        <li>简单可扩展</li>
-        <li>轻量快速</li>
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <div class="container">© 2026 示例站点</div>
-  </footer>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
